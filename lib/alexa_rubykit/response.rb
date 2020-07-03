@@ -9,6 +9,7 @@ module AlexaRubykit
       @session_attributes = Hash.new
       @version = version
       @directives = []
+      @ignore_session_end = false
     end
 
     # Adds a key,value pair to the session object.
@@ -37,6 +38,7 @@ module AlexaRubykit
           }
         }
       }
+      @ignore_session_end = false
     end
 
     def add_video_url(url, title, subtitle)
@@ -50,6 +52,7 @@ module AlexaRubykit
               }
           }
       }
+      @ignore_session_end = true
     end
 
     def add_reprompt(speech_text, ssml = false)
@@ -114,7 +117,8 @@ module AlexaRubykit
       @response[:directives] = @directives unless @directives.empty?
       @response[:card] = @card unless @card.nil?
       @response[:reprompt] = @reprompt unless session_end && @reprompt.nil?
-      @response[:shouldEndSession] = session_end
+      @response[:shouldEndSession] = session_end unless @ignore_session_end
+
       @response
     end
 
