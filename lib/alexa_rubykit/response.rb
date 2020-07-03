@@ -89,14 +89,22 @@ module AlexaRubykit
     # Adds a speech to the object, also returns a outputspeech object.
     def say_response(speech, end_session = true, ssml = false)
       output_speech = add_speech(speech,ssml)
-      { :outputSpeech => output_speech, :shouldEndSession => end_session }
+      if @ignore_session_end
+        { :outputSpeech => output_speech }
+      else
+        { :outputSpeech => output_speech, :shouldEndSession => end_session }
+      end
     end
 
     # Incorporates reprompt in the SDK 2015-05
     def say_response_with_reprompt(speech, reprompt_speech, end_session = true, speech_ssml = false, reprompt_ssml = false)
       output_speech = add_speech(speech,speech_ssml)
       reprompt_speech = add_reprompt(reprompt_speech,reprompt_ssml)
-      { :outputSpeech => output_speech, :reprompt => reprompt_speech, :shouldEndSession => end_session }
+      if @ignore_session_end
+        { :outputSpeech => output_speech, :reprompt => reprompt_speech }
+      else
+        { :outputSpeech => output_speech, :reprompt => reprompt_speech, :shouldEndSession => end_session }
+      end
     end
 
 
