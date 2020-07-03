@@ -46,7 +46,7 @@ module AlexaRubykit
               'source' => url,
               'metadata' => {
                   'title' => title,
-                  'url' => subtitle,
+                  'subtitle' => subtitle,
               }
           }
       }
