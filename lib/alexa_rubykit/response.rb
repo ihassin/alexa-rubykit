@@ -39,6 +39,19 @@ module AlexaRubykit
       }
     end
 
+    def add_video_url(url, title, subtitle)
+      @directives << {
+          'type' => 'VideoApp.Launch',
+          'videoItem' => {
+              'source' => url,
+              'metadata' => {
+                  'title' => title,
+                  'url' => subtitle,
+              }
+          }
+      }
+    end
+
     def add_reprompt(speech_text, ssml = false)
       if ssml
         @reprompt = { "outputSpeech" => { :type => 'SSML', :ssml => check_ssml(speech_text) } }
